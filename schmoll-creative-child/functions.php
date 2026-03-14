@@ -147,6 +147,46 @@ function schmoll_child_sr_options_html() {
     <?php
 }
 
+/* ── Portfolio Importer admin page ── */
+add_action( 'admin_menu', 'schmoll_importer_menu' );
+function schmoll_importer_menu() {
+    add_theme_page(
+        'Portfolio Importer',
+        'Portfolio Import',
+        'manage_options',
+        'schmoll-import',
+        'schmoll_importer_page'
+    );
+}
+
+function schmoll_importer_page() {
+    if ( ! current_user_can( 'manage_options' ) ) return;
+
+    $results = [];
+
+    if ( isset( $_POST['schmoll_import_nonce'] ) && wp_verify_nonce( $_POST['schmoll_import_nonce'], 'schmoll_run_import' ) ) {
+        require_once get_stylesheet_directory() . '/import-portfolio.php';
+        $results = schmoll_run_portfolio_import();
+    }
+    ?>
+    <div class="wrap">
+        <h1>Portfolio Importer</h1>
+        <p>Creates all 19 portfolio posts from schmollcreative.com. Safe to run multiple times — skips posts that already exist.</p>
+        <?php if ( $results ) : ?>
+            <ul>
+                <?php foreach ( $results as $r ) : ?>
+                    <li><?php echo esc_html( $r ); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+        <form method="post">
+            <?php wp_nonce_field( 'schmoll_run_import', 'schmoll_import_nonce' ); ?>
+            <?php submit_button( 'Run Import' ); ?>
+        </form>
+    </div>
+    <?php
+}
+
 /* ── Example: override services via filter ── */
 /*
 add_filter( 'schmoll_services', function( $services ) {

@@ -59,11 +59,6 @@ while ( have_posts() ) : the_post();
 
         <!-- CTAs -->
         <div style="margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;">
-            <?php if ( $url ) : ?>
-            <a href="<?php echo esc_url( $url ); ?>" class="btn btn-primary" target="_blank" rel="noopener">
-                <?php _e( 'View Live Project', 'schmoll-creative' ); ?>
-            </a>
-            <?php endif; ?>
             <a href="<?php echo esc_url( home_url( '/#work' ) ); ?>" class="btn btn-ghost">
                 &larr; <?php _e( 'Back to Work', 'schmoll-creative' ); ?>
             </a>
