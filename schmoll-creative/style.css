@@ -1,0 +1,17 @@
+/*
+Theme Name:  Schmoll Creative
+Theme URI:   https://schmollcreative.com
+Author:      Kevin Schmoll
+Author URI:  https://schmollcreative.com
+Description: Custom portfolio theme for Schmoll Creative — Art Direction & Brand Strategy. Dark, grungy, ink-stained aesthetic with Roboto type system.
+Version:     1.0.0
+License:     GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: schmoll-creative
+Tags:        portfolio, dark, one-page, custom-menu, featured-images, full-width-template
+*/
+
+/* =============================================================
+   This file is intentionally minimal — all styles are loaded
+   via functions.php from assets/css/main.css
+   ============================================================= */

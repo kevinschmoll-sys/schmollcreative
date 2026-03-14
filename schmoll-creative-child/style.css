@@ -1,0 +1,32 @@
+/*
+Theme Name:  Schmoll Creative Child
+Theme URI:   https://schmollcreative.com
+Author:      Kevin Schmoll
+Author URI:  https://schmollcreative.com
+Description: Child theme for Schmoll Creative. Use this theme to safely customise styles, override templates, and add functionality without modifying the parent theme.
+Version:     1.0.0
+Template:    schmoll-creative
+License:     GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: schmoll-creative-child
+*/
+
+/* =============================================================
+   ADD YOUR CUSTOM CSS OVERRIDES BELOW THIS LINE
+   The parent theme's full stylesheet loads automatically.
+   =============================================================
+
+   Examples:
+
+   -- Change brand blue to a custom colour:
+   :root { --blue: #0072ce; }
+
+   -- Override hero headline size on desktop:
+   @media (min-width:1024px) {
+     .hero-headline { font-size: 8rem; }
+   }
+
+   -- Hide the marquee ticker:
+   .marquee-wrap { display: none; }
+
+*/
