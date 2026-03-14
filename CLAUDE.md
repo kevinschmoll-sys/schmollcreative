@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-**Schmoll Creative** is a custom WordPress theme for Kevin Schmoll's portfolio site (Art Director / Creative Strategist). Located at `Desktop/schmoll-creative-theme/`.
+**Schmoll Creative** is a custom WordPress theme for Kevin Schmoll's portfolio site (Art Director / Creative Strategist). Requires WordPress 5.0+ and PHP 7.0+.
 
 ## No Build Step
 
