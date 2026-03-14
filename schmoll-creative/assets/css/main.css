@@ -1078,3 +1078,38 @@ footer {
   mix-blend-mode: screen;
   opacity: 0.7;
 }
+/* =============================================
+   AVADA BUILDER COMPATIBILITY
+   ============================================= */
+
+/* Restore natural image display inside Avada elements */
+.fusion-imageframe img,
+.fusion-carousel img,
+.fusion-gallery-image img,
+.rev_slider img,
+.fusion-slide-o-image img {
+  display: inline-block;
+}
+
+/* Restore anchor styling inside Avada Builder components */
+.fusion-row a,
+.fusion-column a,
+.fusion-button {
+  color: unset;
+  text-decoration: unset;
+}
+
+/* Hide theme chrome inside Avada Builder live-preview iframe */
+.fusion-builder-live .splatter-layer,
+.fusion-builder-live .site-nav,
+.fusion-builder-live .nav-drawer,
+.fusion-builder-live body::before {
+  display: none !important;
+}
+
+/* Blank canvas page template — Avada handles all layout */
+.schmoll-avada-canvas .site-nav,
+.schmoll-avada-canvas .nav-drawer,
+.schmoll-avada-canvas .splatter-layer {
+  display: none;
+}

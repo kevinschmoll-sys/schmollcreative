@@ -306,3 +306,42 @@ add_action( 'widgets_init', 'schmoll_widgets_init' );
 function schmoll_opt( $key, $fallback = '' ) {
     return get_option( 'schmoll_' . $key, $fallback );
 }
+
+/* ============================================================
+   AVADA BUILDER / AVADA CORE COMPATIBILITY
+   ============================================================ */
+
+/**
+ * Register the Portfolio CPT with Avada Builder so individual
+ * project pages can be built with the drag-and-drop editor.
+ */
+add_filter( 'fusion_builder_post_types', 'schmoll_avada_post_types' );
+function schmoll_avada_post_types( $post_types ) {
+    if ( ! in_array( 'portfolio', $post_types, true ) ) {
+        $post_types[] = 'portfolio';
+    }
+    return $post_types;
+}
+
+/**
+ * Skip theme stylesheet inside the Avada Builder live-preview
+ * iframe to prevent CSS conflicts while editing.
+ */
+add_action( 'wp_enqueue_scripts', 'schmoll_maybe_dequeue_in_builder', 20 );
+function schmoll_maybe_dequeue_in_builder() {
+    if ( function_exists( 'fusion_is_preview_frame' ) && fusion_is_preview_frame() ) {
+        wp_dequeue_style( 'schmoll-main' );
+    }
+}
+
+/**
+ * Add a body class when Avada Builder is present so CSS can
+ * target Avada-specific contexts safely.
+ */
+add_filter( 'body_class', 'schmoll_avada_body_class' );
+function schmoll_avada_body_class( $classes ) {
+    if ( class_exists( 'FusionBuilder' ) ) {
+        $classes[] = 'schmoll-avada-active';
+    }
+    return $classes;
+}

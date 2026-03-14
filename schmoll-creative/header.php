@@ -8,6 +8,17 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<?php
+/**
+ * Skip the theme's nav chrome when:
+ * - Avada Core is managing the header via its layout builder, OR
+ * - We're inside the Avada Builder live-preview iframe.
+ */
+$schmoll_hide_nav = ( class_exists( 'Avada' ) && function_exists( 'avada_header_render' ) )
+                 || ( function_exists( 'fusion_is_preview_frame' ) && fusion_is_preview_frame() );
+if ( ! $schmoll_hide_nav ) :
+?>
+
 <div class="splatter-layer" aria-hidden="true"></div>
 
 <!-- NAV -->
@@ -37,3 +48,5 @@
     <a href="<?php echo esc_url( home_url( '/#testimonials' ) ); ?>" onclick="closeNav()"><?php _e( 'Kind Words', 'schmoll-creative' ); ?></a>
     <a href="<?php echo esc_url( home_url( '/#contact' ) ); ?>" onclick="closeNav()"><?php _e( "Let's Talk", 'schmoll-creative' ); ?></a>
 </div>
+
+<?php endif; // end $schmoll_hide_nav ?>
