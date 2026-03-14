@@ -1,112 +1,96 @@
 # Schmoll Creative — WordPress Theme
 
-## Package Contents
+A custom WordPress portfolio theme for Kevin Schmoll, Art Director & Creative Strategist. Built with a dark, ink-stained aesthetic using vanilla PHP, CSS, and JavaScript — no build tools required.
 
-```
-schmoll-creative/          ← Parent theme (install this first)
-schmoll-creative-child/    ← Child theme (activate this one)
-```
+---
+
+## Requirements
+
+- WordPress 5.0+
+- PHP 7.0+
+- [Slider Revolution](https://www.sliderrevolution.com) *(optional — theme falls back gracefully without it)*
 
 ---
 
 ## Installation
 
-### 1. Upload Both Themes
-1. In WordPress admin go to **Appearance > Themes > Add New > Upload Theme**
+1. Go to **Appearance > Themes > Add New > Upload Theme**
 2. Upload `schmoll-creative.zip` → Install
 3. Upload `schmoll-creative-child.zip` → Install
-4. **Activate `Schmoll Creative Child`** (NOT the parent directly)
+4. **Activate `Schmoll Creative Child`** (not the parent directly)
+5. Go to **Settings > Permalinks** and click **Save Changes** to flush rewrite rules
+6. Go to **Settings > Reading**, set homepage to a static page, and assign a blank "Home" page
 
-### 2. Set a Static Front Page
-1. Go to **Settings > Reading**
-2. Set "Your homepage displays" to **A static page**
-3. Create a blank page called "Home" and select it as the Homepage
-4. WordPress will now use `front-page.php` to render the homepage
+---
 
-### 3. Configure Theme Options
-Go to **Appearance > Theme Options** and fill in:
-- Hero eyebrow text, headline words, sub-headline
-- Stats (20+ Years, 150+ Brands, etc.)
+## Configuration
+
+All site copy is managed without touching code at **Appearance > Theme Options**:
+
+- Hero eyebrow, headline, and sub-headline
+- Stats (e.g. 20+ Years, 150+ Brands)
 - Marquee ticker text
 - Contact email
-- LinkedIn / Instagram / Behance URLs
+- LinkedIn, Instagram, and Behance URLs
 
 ---
 
-## Slider Revolution Setup
+## Content
 
-### Install the Plugin
-1. Purchase at https://www.sliderrevolution.com
-2. In WP Admin: **Plugins > Add New > Upload Plugin** → upload the SR zip → Activate
+### Portfolio Projects
 
-### Create the Hero Slider
-1. Go to **Slider Revolution > New Slider**
-2. Set slider type to **Fullwidth**
-3. Set minimum height to `100vh`
-4. **Set the Alias to `schmoll-hero`** (critical)
-5. Add your hero image(s) or video as slide layers
-6. Recommended: disable navigation arrows/bullets for a clean look
-7. Publish the slider
-
-### Confirm in Child Theme Settings
-1. Go to **Appearance > SR Settings**
-2. Confirm the alias field reads `schmoll-hero`
-3. Refresh the homepage — the hero image will be replaced by your slider
-
-> **If SR is not active**, the theme automatically falls back to a static  
-> hero image. No broken layouts.
-
----
-
-## Portfolio Projects
-
-### Adding Projects via WP Admin
-1. Go to **Portfolio > Add New**
-2. Set a **Featured Image** (used as the grid thumbnail)
-3. Fill in the sidebar meta fields:
-   - **Client** — client/brand name
-   - **Year** — project year
-   - **Role / Category** — e.g. "Brand Identity · Digital"
-   - **Project URL** — external link (overrides WP permalink on grid click)
-   - **Feature on homepage** — check to include in the homepage grid
+1. **Portfolio > Add New**
+2. Set a featured image (used as the grid thumbnail)
+3. Fill in the meta fields: Client, Year, Role/Category, Project URL, Feature on homepage
 4. Publish
 
-Projects automatically appear in the homepage grid ordered by menu order then date.  
-Up to 12 projects are shown. The "View All Work" button links to the portfolio archive (`/work/`).
+Up to 12 projects appear in the homepage grid, ordered by menu order then date. The portfolio archive lives at `/work/`.
 
----
+### Testimonials
 
-## Testimonials
-
-1. Go to **Testimonials > Add New**
-2. Paste the quote text in the editor
-3. Set a **Featured Image** (square avatar photo, 88×88px min)
-4. Fill in sidebar fields: Name, Title/Role, Company
+1. **Testimonials > Add New**
+2. Paste the quote in the editor
+3. Set a square featured image (88×88px minimum)
+4. Fill in: Name, Title/Role, Company
 5. Publish
 
 Up to 6 testimonials are shown on the homepage.
 
 ---
 
-## Child Theme Customisation
+## Slider Revolution (Optional Hero)
 
-Edit `schmoll-creative-child/style.css` to override styles:
+1. Install and activate the SR plugin via **Plugins > Add New > Upload Plugin**
+2. Go to **Slider Revolution > New Slider** — set type to Fullwidth, min height to `100vh`
+3. **Set the alias to `schmoll-hero`** (required)
+4. Add slide layers and publish
+5. Confirm the alias at **Appearance > SR Settings**
+
+If SR is not active, the theme automatically falls back to a static hero image.
+
+---
+
+## Customisation
+
+### CSS Overrides
+
+Edit `schmoll-creative-child/style.css`. The design is token-based:
 
 ```css
-/* Change brand blue */
+/* Swap brand color */
 :root { --blue: #0072ce; }
 
-/* Adjust hero headline size */
+/* Resize hero headline */
 @media (min-width: 1024px) {
   .hero-headline { font-size: 8rem; }
 }
 ```
 
-Override templates by copying the relevant file from the parent into the child  
-at the same path and editing the copy. WordPress automatically prefers child  
-theme files over parent theme files.
+Key tokens: `--ink` (background), `--paper` (text), `--blue` (brand).
 
-Override services or brand logos by adding filters to `functions.php` in the child theme:
+### PHP Filter Hooks
+
+Override data arrays in `schmoll-creative-child/functions.php`:
 
 ```php
 add_filter( 'schmoll_services', function( $services ) {
@@ -115,42 +99,42 @@ add_filter( 'schmoll_services', function( $services ) {
 } );
 ```
 
+Available filters: `schmoll_services`, `schmoll_skills`, `schmoll_brand_logos`
+
+### Template Overrides
+
+Copy any file from `schmoll-creative/` into `schmoll-creative-child/` at the same path. WordPress automatically uses the child theme version.
+
 ---
 
-## Theme File Map
+## File Structure
 
 ```
-schmoll-creative/
-├── style.css                      Theme declaration
+schmoll-creative/                  Parent theme
 ├── functions.php                  Setup, CPTs, meta boxes, Theme Options
-├── front-page.php                 Homepage template
-├── index.php                      Blog/archive fallback
-├── header.php                     Nav + splatter layer
-├── footer.php                     Footer + social links
+├── front-page.php                 Homepage (loads all template-parts)
 ├── single-portfolio.php           Individual project page
+├── header.php / footer.php
 ├── assets/
-│   ├── css/main.css               Full design system stylesheet
+│   ├── css/main.css               Full design system
 │   └── js/main.js                 Nav, scroll reveal, smooth scroll
 └── template-parts/
-    ├── hero.php                   Hero section (SR or static image)
-    ├── marquee.php                Animated ticker
+    ├── hero.php                   Hero (SR or static fallback)
+    ├── marquee.php                Animated skill ticker
     ├── services.php               Service cards
     ├── work.php                   Portfolio grid
-    ├── about.php                  Bio + skills
-    ├── testimonials.php           Testimonial cards
+    ├── about.php                  Bio + skills tags
+    ├── testimonials.php           Client testimonials
     ├── brands.php                 Brand logo strip
     └── contact.php                Contact CTA
 
-schmoll-creative-child/
-├── style.css                      Child theme declaration + CSS overrides
-└── functions.php                  Parent stylesheet loader + SR settings page
+schmoll-creative-child/            Child theme (activate this one)
+├── style.css                      CSS overrides
+└── functions.php                  Parent loader + SR Settings page
 ```
 
 ---
 
-## Notes
+## License
 
-- **Flush permalinks** after activation: Settings > Permalinks > Save Changes
-- Portfolio archive URL: `/work/`
-- The splatter texture and grain overlay are pure CSS — no images required
-- All copy (hero text, stats, marquee, contact email, social URLs) is editable via Appearance > Theme Options without touching code
+Copyright (c) 2026 Kevin Schmoll. All Rights Reserved.
