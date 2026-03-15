@@ -1,74 +1,81 @@
 #!/usr/bin/env bash
-# deploy.sh — Sync Schmoll Creative themes to public_html/claudestage staging
+# deploy.sh — Deploy Schmoll Creative themes to GoDaddy via FTP/FTPS
 #
 # Usage:
-#   ./deploy.sh [user@host]
+#   ./deploy.sh
 #
-# If no host argument is given, the script deploys to the local path
-# ~/public_html/claudestage (useful when running on the hosting server itself).
-#
-# Environment variables (override defaults):
-#   DEPLOY_HOST   SSH user@host  (e.g. kevinschmoll@kevinschmoll.com)
-#   DEPLOY_PATH   Remote/local base path (default: ~/public_html/claudestage)
-#   SSH_PORT      SSH port (default: 22)
+# Credentials are read from .env.deploy (gitignored). Copy .env.deploy.example
+# if starting fresh. Requires lftp (sudo apt install lftp / brew install lftp).
 
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
+ENV_FILE="${REPO_ROOT}/.env.deploy"
+
+# ── Load credentials ──────────────────────────────────────────────────────────
+if [[ ! -f "${ENV_FILE}" ]]; then
+    echo "ERROR: ${ENV_FILE} not found."
+    echo "Create it with:"
+    echo "  FTP_HOST=ftp.schmollcreative.com"
+    echo "  FTP_USER=your_ftp_user"
+    echo "  FTP_PASS=your_ftp_password"
+    echo "  FTP_PORT=21"
+    echo "  DEPLOY_PATH=public_html/claudestage"
+    exit 1
+fi
+
+# shellcheck disable=SC1090
+source "${ENV_FILE}"
+
+FTP_HOST="${FTP_HOST:?FTP_HOST not set}"
+FTP_USER="${FTP_USER:?FTP_USER not set}"
+FTP_PASS="${FTP_PASS:?FTP_PASS not set}"
+FTP_PORT="${FTP_PORT:-21}"
+DEPLOY_PATH="${DEPLOY_PATH:-public_html/claudestage}"
+
+THEMES_DEST="${DEPLOY_PATH}/wp-content/themes"
 THEMES_SRC_PARENT="${REPO_ROOT}/schmoll-creative"
 THEMES_SRC_CHILD="${REPO_ROOT}/schmoll-creative-child"
 
-DEPLOY_HOST="${DEPLOY_HOST:-${1:-}}"
-DEPLOY_PATH="${DEPLOY_PATH:-public_html/claudestage}"
-SSH_PORT="${SSH_PORT:-22}"
-
-THEMES_DEST="${DEPLOY_PATH}/wp-content/themes"
-
-# Rsync options: archive, compress, delete removed files, verbose summary
-RSYNC_OPTS=(-avz --delete --exclude='.DS_Store' --exclude='*.zip' --exclude='.git')
-
-echo "==> Deploying Schmoll Creative to: ${DEPLOY_HOST:-local}:${DEPLOY_PATH}"
-echo "    Themes destination: ${THEMES_DEST}"
+echo "==> Deploying Schmoll Creative themes to FTP"
+echo "    Host : ${FTP_HOST}:${FTP_PORT}"
+echo "    Path : ${THEMES_DEST}"
 echo ""
 
-if [[ -n "${DEPLOY_HOST}" ]]; then
-    # ── Remote deploy via rsync over SSH ──────────────────────────────────
-    SSH_OPTS=(-e "ssh -p ${SSH_PORT} -o StrictHostKeyChecking=accept-new")
+# ── lftp mirror helper ────────────────────────────────────────────────────────
+ftp_mirror() {
+    local local_dir="$1"
+    local remote_dir="$2"
 
-    echo "--> Syncing parent theme (schmoll-creative)..."
-    rsync "${RSYNC_OPTS[@]}" "${SSH_OPTS[@]}" \
-        "${THEMES_SRC_PARENT}/" \
-        "${DEPLOY_HOST}:${THEMES_DEST}/schmoll-creative/"
+    lftp -u "${FTP_USER},${FTP_PASS}" \
+         -p "${FTP_PORT}" \
+         "ftps://${FTP_HOST}" <<LFTP_SCRIPT
+set ssl:verify-certificate no
+set ftp:ssl-force true
+set ftp:ssl-protect-data true
+set net:timeout 30
+set net:max-retries 3
+set net:reconnect-interval-base 5
+mirror --reverse --delete --verbose \
+       --exclude='.DS_Store' \
+       --exclude='.git/' \
+       --exclude='*.zip' \
+       "${local_dir}/" \
+       "${remote_dir}/"
+bye
+LFTP_SCRIPT
+}
 
-    echo "--> Syncing child theme (schmoll-creative-child)..."
-    rsync "${RSYNC_OPTS[@]}" "${SSH_OPTS[@]}" \
-        "${THEMES_SRC_CHILD}/" \
-        "${DEPLOY_HOST}:${THEMES_DEST}/schmoll-creative-child/"
+echo "--> Syncing parent theme (schmoll-creative)..."
+ftp_mirror "${THEMES_SRC_PARENT}" "${THEMES_DEST}/schmoll-creative"
 
-    echo ""
-    echo "==> Done. Verify at https://${DEPLOY_HOST#*@}/${DEPLOY_PATH#public_html/}"
-else
-    # ── Local deploy (running directly on the server) ─────────────────────
-    DEST_PARENT="${HOME}/${THEMES_DEST}/schmoll-creative"
-    DEST_CHILD="${HOME}/${THEMES_DEST}/schmoll-creative-child"
+echo ""
+echo "--> Syncing child theme (schmoll-creative-child)..."
+ftp_mirror "${THEMES_SRC_CHILD}" "${THEMES_DEST}/schmoll-creative-child"
 
-    mkdir -p "${DEST_PARENT}" "${DEST_CHILD}"
-
-    echo "--> Syncing parent theme (schmoll-creative)..."
-    rsync "${RSYNC_OPTS[@]}" \
-        "${THEMES_SRC_PARENT}/" \
-        "${DEST_PARENT}/"
-
-    echo "--> Syncing child theme (schmoll-creative-child)..."
-    rsync "${RSYNC_OPTS[@]}" \
-        "${THEMES_SRC_CHILD}/" \
-        "${DEST_CHILD}/"
-
-    echo ""
-    echo "==> Done. Themes deployed to:"
-    echo "    ${DEST_PARENT}"
-    echo "    ${DEST_CHILD}"
-    echo ""
-    echo "    Remember to flush WordPress permalinks:"
-    echo "    WP Admin > Settings > Permalinks > Save Changes"
-fi
+echo ""
+echo "==> Done."
+echo "    Staging URL : https://schmollcreative.com/claudestage/"
+echo ""
+echo "    Remember to flush WordPress permalinks if needed:"
+echo "    WP Admin > Settings > Permalinks > Save Changes"

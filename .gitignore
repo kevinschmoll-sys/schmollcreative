@@ -1,6 +1,9 @@
 # Theme distribution zips
 *.zip
 
+# Deployment credentials (never commit)
+.env.deploy
+
 # macOS
 .DS_Store
 
