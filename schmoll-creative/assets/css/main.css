@@ -187,7 +187,6 @@ body::before {
    HERO
    ============================================= */
 .hero {
-  padding-top: 60px;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -384,6 +383,7 @@ body::before {
   overflow: hidden;
   padding: 8px 0;
   position: relative;
+  margin-top: 60px; /* clear fixed nav (mobile) */
 }
 .marquee-wrap::before,
 .marquee-wrap::after {
@@ -919,8 +919,11 @@ footer {
     color: #fff;
   }
 
+  /* Clear taller desktop nav */
+  .marquee-wrap { margin-top: 66px; }
+
   /* Hero side-by-side */
-  .hero { padding-top: 66px; flex-direction: row; min-height: 100svh; }
+  .hero { flex-direction: row; min-height: 100svh; }
   .hero-art {
     width: 50%;
     aspect-ratio: unset;

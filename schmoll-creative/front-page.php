@@ -17,9 +17,9 @@
 get_header();
 ?>
 
-<?php get_template_part( 'template-parts/hero' ); ?>
-
 <?php get_template_part( 'template-parts/marquee' ); ?>
+
+<?php get_template_part( 'template-parts/hero' ); ?>
 
 <div class="tear dark"></div>
 
