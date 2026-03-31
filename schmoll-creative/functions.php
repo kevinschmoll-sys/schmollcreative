@@ -237,12 +237,40 @@ function schmoll_options_page() {
 }
 add_action( 'admin_menu', 'schmoll_options_page' );
 
+function schmoll_options_admin_scripts( $hook ) {
+    if ( $hook !== 'appearance_page_schmoll-options' ) return;
+    wp_enqueue_media();
+    wp_add_inline_script( 'jquery-core', "
+        jQuery(function($){
+            $('.schmoll-media-btn').on('click', function(e){
+                e.preventDefault();
+                var btn    = $(this);
+                var target = btn.data('target');
+                var prev   = btn.data('preview');
+                var frame  = wp.media({ title: 'Select Image', button: { text: 'Use this image' }, multiple: false });
+                frame.on('select', function(){
+                    var att = frame.state().get('selection').first().toJSON();
+                    $('#' + target).val(att.id);
+                    $('#' + prev).attr('src', att.sizes && att.sizes.thumbnail ? att.sizes.thumbnail.url : att.url).show();
+                });
+                frame.open();
+            });
+        });
+    " );
+}
+add_action( 'admin_enqueue_scripts', 'schmoll_options_admin_scripts' );
+
 function schmoll_options_page_html() {
     if ( ! current_user_can( 'manage_options' ) ) return;
     if ( isset( $_POST['schmoll_options_nonce'] ) && wp_verify_nonce( $_POST['schmoll_options_nonce'], 'schmoll_save_options' ) ) {
         $fields = [ 'hero_eyebrow', 'hero_headline_1', 'hero_headline_2', 'hero_sub', 'stat_1_n', 'stat_1_l', 'stat_2_n', 'stat_2_l', 'stat_3_n', 'stat_3_l', 'contact_email', 'linkedin_url', 'instagram_url', 'behance_url', 'marquee_text' ];
         foreach ( $fields as $f ) {
             update_option( 'schmoll_' . $f, sanitize_text_field( $_POST[ $f ] ?? '' ) );
+        }
+        foreach ( [ 'hero_image_id', 'about_image_id' ] as $img_field ) {
+            if ( isset( $_POST[ $img_field ] ) && is_numeric( $_POST[ $img_field ] ) ) {
+                update_option( 'schmoll_' . $img_field, absint( $_POST[ $img_field ] ) );
+            }
         }
         echo '<div class="updated"><p>Options saved.</p></div>';
     }
@@ -254,6 +282,15 @@ function schmoll_options_page_html() {
             <?php wp_nonce_field( 'schmoll_save_options', 'schmoll_options_nonce' ); ?>
             <h2>Hero Section</h2>
             <table class="form-table">
+                <tr>
+                    <th>Hero Image</th>
+                    <td>
+                        <?php $hero_id = (int) get_option( 'schmoll_hero_image_id' ); $hero_thumb = $hero_id ? wp_get_attachment_image_url( $hero_id, 'thumbnail' ) : ''; ?>
+                        <input type="hidden" id="hero_image_id" name="hero_image_id" value="<?php echo esc_attr( $hero_id ?: '' ); ?>">
+                        <img id="hero_image_preview" src="<?php echo esc_url( $hero_thumb ); ?>" style="max-width:120px;display:<?php echo $hero_thumb ? 'block' : 'none'; ?>;margin-bottom:6px;">
+                        <button type="button" class="button schmoll-media-btn" data-target="hero_image_id" data-preview="hero_image_preview">Select Hero Image</button>
+                    </td>
+                </tr>
                 <tr><th>Eyebrow Text</th><td><input name="hero_eyebrow" value="<?php echo esc_attr($g('hero_eyebrow')); ?>" class="regular-text" placeholder="Art Direction · Creative Direction · Brand Strategy"></td></tr>
                 <tr><th>Headline Word 1 (charcoal)</th><td><input name="hero_headline_1" value="<?php echo esc_attr($g('hero_headline_1')); ?>" class="regular-text" placeholder="Bold"></td></tr>
                 <tr><th>Headline Word 2 (blue)</th><td><input name="hero_headline_2" value="<?php echo esc_attr($g('hero_headline_2')); ?>" class="regular-text" placeholder="Brands."></td></tr>
@@ -271,6 +308,18 @@ function schmoll_options_page_html() {
             <h2>Marquee / Ticker</h2>
             <table class="form-table">
                 <tr><th>Marquee Text (separate items with ·)</th><td><input name="marquee_text" value="<?php echo esc_attr($g('marquee_text')); ?>" class="large-text" placeholder="Art Direction · Brand Identity · Creative Direction · Visual Strategy · UI/UX Design · Print · Digital"></td></tr>
+            </table>
+            <h2>About Section</h2>
+            <table class="form-table">
+                <tr>
+                    <th>About / Profile Image</th>
+                    <td>
+                        <?php $about_id = (int) get_option( 'schmoll_about_image_id' ); $about_thumb = $about_id ? wp_get_attachment_image_url( $about_id, 'thumbnail' ) : ''; ?>
+                        <input type="hidden" id="about_image_id" name="about_image_id" value="<?php echo esc_attr( $about_id ?: '' ); ?>">
+                        <img id="about_image_preview" src="<?php echo esc_url( $about_thumb ); ?>" style="max-width:120px;display:<?php echo $about_thumb ? 'block' : 'none'; ?>;margin-bottom:6px;">
+                        <button type="button" class="button schmoll-media-btn" data-target="about_image_id" data-preview="about_image_preview">Select About Image</button>
+                    </td>
+                </tr>
             </table>
             <h2>Contact & Social</h2>
             <table class="form-table">

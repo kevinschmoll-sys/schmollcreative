@@ -62,6 +62,11 @@ while ( have_posts() ) : the_post();
             <a href="<?php echo esc_url( home_url( '/#work' ) ); ?>" class="btn btn-ghost">
                 &larr; <?php _e( 'Back to Work', 'schmoll-creative' ); ?>
             </a>
+            <?php if ( $url ) : ?>
+            <a href="<?php echo esc_url( $url ); ?>" class="btn btn-primary" target="_blank" rel="noopener">
+                <?php _e( 'View Live Project', 'schmoll-creative' ); ?> &rarr;
+            </a>
+            <?php endif; ?>
         </div>
 
     </div>
