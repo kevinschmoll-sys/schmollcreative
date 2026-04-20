@@ -1,6 +1,6 @@
 # KSC STATIC BUILD — HANDOFF
-## Updated: April 20, 2026 — Code review fixes applied
-## Status: ALL 19 CASE STUDY PAGES COMPLETE. Live at schmollcreative.com/punksite/. CSS v3.0. All code review issues resolved.
+## Updated: April 20, 2026 — Full session complete
+## Status: LIVE at schmollcreative.com (root domain). All sections complete. SEO done. Social section live.
 
 ---
 
@@ -26,8 +26,8 @@ Static HTML portfolio site for Kevin Schmoll — Art Director / Creative Directo
 Migrated off WordPress/Avada to hand-coded HTML/CSS/JS.
 Punk/brutalist aesthetic. No frameworks, no build step, no dependencies.
 
-**Live URL:** https://schmollcreative.com/punksite/
-**Host:** GoDaddy shared hosting → `public_html/punksite`
+**Live URL:** https://www.schmollcreative.com/
+**Host:** GoDaddy shared hosting → `public_html/`
 **FTP creds:** macOS Keychain → `ksc-deploy-ftp` / `kevinschmoll79`
 
 ---
@@ -382,4 +382,5 @@ The Avada build taught us:
 | Apr 5 | Avada build: CSS rewrite, ticker positioning, SR7 guide update, CSS framework research |
 | Apr 12 | Static build started: migrated off Avada, built index.html + style.css + main.js, first 11 case studies |
 | Apr 13 | Ticker positioning, deploy script, all 19 case studies completed |
-| Apr 20 | Code review: 8 fixes applied — duplicate OrthoLite removed, loading=lazy on 71 images, OG/social meta tags, removed maximum-scale=1.0, CSS bg paths → root-relative /punksite/, loader math fixed, contact.php → PHPMailer+SMTP, setup-password.sh removed from repo |
+| Apr 20 (AM) | Code review: 8 fixes — duplicate OrthoLite removed, loading=lazy on 71 images, OG/social meta tags, removed maximum-scale=1.0, CSS bg paths → root-relative, loader math fixed, contact.php → PHPMailer+SMTP, setup-password.sh removed from repo |
+| Apr 20 (PM) | Migrated to root domain: all /punksite/ references removed, deploy.sh → public_html/, .htaccess updated (clean URLs, www redirect, index.html hidden). Full SEO pass: sharpened meta/title on all 20 pages, canonical, robots, keywords, Person schema (homepage), CreativeWork schema (19 case studies), sitemap.xml, robots.txt. Social section restored: Instagram grid (9 real @kevinschmollcreative photos from insta/ folder), Availability CTA card (replaced broken X embed), LinkedIn profile badge. Git repo wiped and rebuilt clean (no WordPress history). |
