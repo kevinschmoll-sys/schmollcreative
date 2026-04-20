@@ -80,7 +80,7 @@ img { display: block; max-width: 100%; -webkit-user-drag: none; user-select: non
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('../../images/00_site-ui/recentwork_hero.jpg');
+  background-image: url('/punksite/images/00_site-ui/recentwork_hero.jpg');
   background-size: cover;
   background-position: center top;
   opacity: 0.22;
@@ -190,7 +190,7 @@ img { display: block; max-width: 100%; -webkit-user-drag: none; user-select: non
   padding: var(--ksc-pad-lg) var(--ksc-pad);
   position: relative;
   overflow: hidden;
-  background-image: url('../../SR-Hero-Export/aboutsplatter.png');
+  background-image: url('/punksite/SR-Hero-Export/aboutsplatter.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -303,7 +303,7 @@ img { display: block; max-width: 100%; -webkit-user-drag: none; user-select: non
 .ksc-contact-left {
   padding: var(--ksc-pad-lg) var(--ksc-pad) var(--ksc-pad-lg);
   position: relative;
-  background-image: url('../../SR-Hero-Export/projectsplatter.png');
+  background-image: url('/punksite/SR-Hero-Export/projectsplatter.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -311,7 +311,7 @@ img { display: block; max-width: 100%; -webkit-user-drag: none; user-select: non
 .ksc-contact-right {
   padding: var(--ksc-pad);
   position: relative;
-  background-image: url('../../SR-Hero-Export/projectsplatter2.png');
+  background-image: url('/punksite/SR-Hero-Export/projectsplatter2.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

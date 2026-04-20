@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
       'SR-Hero-Export/HerozombNEW.png',
       'images/00_site-ui/recentwork_hero.jpg'
     ];
-    var totalAssets = criticalAssets.length + document.fonts.size;
+    // Fixed total: 2 images + fonts.ready promise (counted as 1 unit)
+    // document.fonts.size is unreliable at DOMContentLoaded — use fixed count
+    var totalAssets = criticalAssets.length + 1;
     var loaded = 0;
     var dismissed = false;
 
@@ -38,13 +40,13 @@ document.addEventListener('DOMContentLoaded', function () {
       img.src = src;
     });
 
-    // Wait for fonts
+    // Wait for fonts — counts as the 1 extra unit above
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(function () {
-        var remaining = totalAssets - loaded;
-        for (var i = 0; i < remaining; i++) { loaded++; }
         updateLoader();
       });
+    } else {
+      updateLoader(); // fonts API not available, count it done
     }
 
     // Safety timeout — dismiss after 4 seconds no matter what

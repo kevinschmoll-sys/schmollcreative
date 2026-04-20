@@ -8,3 +8,15 @@
 .vscode/
 .idea/
 *.swp
+
+# Deploy cache — local only
+.deploy-cache
+
+# Sensitive setup scripts
+setup-password.sh
+
+# PHPMailer if installed locally
+vendor/
+
+# Fallback mail handler (only needed if PHPMailer missing)
+contact-fallback.php

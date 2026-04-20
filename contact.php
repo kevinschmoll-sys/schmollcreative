@@ -1,7 +1,9 @@
 <?php
 // ============================================================
 // KSC CONTACT FORM HANDLER
-// Receives POST from the contact form, emails Kevin
+// Uses PHPMailer + GoDaddy SMTP for reliable delivery
+// PHPMailer installed via: composer require phpmailer/phpmailer
+// OR drop PHPMailer src/ folder next to this file manually
 // ============================================================
 
 header('Content-Type: application/json');
@@ -14,6 +16,23 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Method not allowed']);
     exit;
 }
+
+// Load PHPMailer — try Composer autoload first, then manual src/ path
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require __DIR__ . '/vendor/autoload.php';
+} elseif (file_exists(__DIR__ . '/PHPMailer/src/PHPMailer.php')) {
+    require __DIR__ . '/PHPMailer/src/Exception.php';
+    require __DIR__ . '/PHPMailer/src/PHPMailer.php';
+    require __DIR__ . '/PHPMailer/src/SMTP.php';
+} else {
+    // PHPMailer not installed — fall back to mail() with a warning logged
+    error_log('KSC: PHPMailer not found, falling back to mail()');
+    require __DIR__ . '/contact-fallback.php';
+    exit;
+}
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 // Sanitize inputs
 function clean($val) {
@@ -39,36 +58,52 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// Honeypot spam check (hidden field — bots fill it, humans don't)
+// Honeypot spam check
 if (!empty($_POST['website'])) {
-    // Silently succeed so bots think it worked
     echo json_encode(['success' => true]);
     exit;
 }
 
-// Build email
-$to      = 'kevinschmoll@gmail.com';
-$subject = 'New inquiry from ' . $name . ' — schmollcreative.com';
+// ── SMTP CONFIG ─────────────────────────────────────────────
+// GoDaddy SMTP credentials — set these as environment variables
+// in GoDaddy cPanel → PHP Variables, or hardcode temporarily.
+// DO NOT commit credentials to git.
+$smtp_host = getenv('KSC_SMTP_HOST') ?: 'smtpout.secureserver.net';
+$smtp_user = getenv('KSC_SMTP_USER') ?: 'noreply@schmollcreative.com';
+$smtp_pass = getenv('KSC_SMTP_PASS') ?: '';  // Set in cPanel env vars
+$smtp_port = 465; // GoDaddy SSL port
 
-$body  = "New contact form submission from schmollcreative.com\n";
-$body .= "================================================\n\n";
-$body .= "Name:         $name\n";
-$body .= "Email:        $email\n";
-$body .= "Company:      $company\n";
-$body .= "Project Type: $type\n\n";
-$body .= "Message:\n$message\n\n";
-$body .= "================================================\n";
-$body .= "Reply directly to this email to respond.\n";
+try {
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host       = $smtp_host;
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $smtp_user;
+    $mail->Password   = $smtp_pass;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port       = $smtp_port;
 
-$headers  = "From: noreply@schmollcreative.com\r\n";
-$headers .= "Reply-To: $email\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion();
+    $mail->setFrom('noreply@schmollcreative.com', 'Schmoll Creative');
+    $mail->addAddress('kevinschmoll@gmail.com', 'Kevin Schmoll');
+    $mail->addReplyTo($email, $name);
 
-$sent = mail($to, $subject, $body, $headers);
+    $mail->Subject = 'New inquiry from ' . $name . ' — schmollcreative.com';
+    $mail->Body    =
+        "New contact form submission from schmollcreative.com\n" .
+        "================================================\n\n" .
+        "Name:         $name\n" .
+        "Email:        $email\n" .
+        "Company:      $company\n" .
+        "Project Type: $type\n\n" .
+        "Message:\n$message\n\n" .
+        "================================================\n" .
+        "Reply directly to this email to respond.\n";
 
-if ($sent) {
+    $mail->send();
     echo json_encode(['success' => true]);
-} else {
+
+} catch (Exception $e) {
+    error_log('KSC mailer error: ' . $mail->ErrorInfo);
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Mail failed — please try again or reach out on LinkedIn']);
 }
