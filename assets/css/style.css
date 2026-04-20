@@ -413,9 +413,23 @@ img { display: block; max-width: 100%; -webkit-user-drag: none; user-select: non
 .ksc-ig-overlay svg { opacity: 0; transition: opacity 0.2s; width: 24px; height: 24px; }
 .ksc-ig-cell:hover .ksc-ig-overlay svg { opacity: 1; }
 
-/* X timeline */
-.ksc-x-embed-wrap { padding: 16px; height: 520px; overflow: hidden; background: var(--ksc-mid); }
-.ksc-x-embed-wrap iframe { border-radius: 0 !important; border: none !important; width: 100% !important; height: 100% !important; }
+/* Availability card */
+.ksc-avail-card { padding: 28px; display: flex; flex-direction: column; gap: 16px; min-height: 520px; }
+.ksc-avail-status { display: flex; align-items: center; gap: 10px; }
+.ksc-avail-dot { width: 10px; height: 10px; border-radius: 50%; background: #00e676; flex-shrink: 0; box-shadow: 0 0 8px #00e676; animation: kscBlink 1.8s ease-in-out infinite; }
+.ksc-avail-status-text { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: #00e676; text-transform: uppercase; }
+.ksc-avail-name { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px,4vw,56px); line-height: 0.88; color: var(--ksc-white); }
+.ksc-avail-title { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: rgba(255,255,255,0.35); text-transform: uppercase; }
+.ksc-avail-divider { height: 1px; background: rgba(255,255,255,0.07); }
+.ksc-avail-label { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.22em; color: var(--ksc-blue); text-transform: uppercase; }
+.ksc-avail-types { display: flex; flex-wrap: wrap; gap: 6px; }
+.ksc-avail-type { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.5); }
+.ksc-avail-type-yellow { border-color: var(--ksc-yellow); color: var(--ksc-yellow); }
+.ksc-avail-disciplines { display: flex; flex-direction: column; gap: 6px; }
+.ksc-avail-disc { font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.6); padding-left: 12px; border-left: 2px solid rgba(6,141,193,0.4); }
+.ksc-avail-location { display: flex; align-items: center; gap: 6px; font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.25); text-transform: uppercase; margin-top: auto; }
+.ksc-avail-cta { display: block; text-align: center; padding: 14px 24px; background: var(--ksc-yellow); color: var(--ksc-dark); font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.08em; transition: background 0.15s; }
+.ksc-avail-cta:hover { background: var(--ksc-white); color: var(--ksc-dark); }
 
 /* LinkedIn badge */
 .ksc-li-embed-wrap { padding: 28px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; min-height: 520px; background: var(--ksc-mid); }
