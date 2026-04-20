@@ -419,6 +419,8 @@ img { display: block; max-width: 100%; -webkit-user-drag: none; user-select: non
 
 /* LinkedIn badge */
 .ksc-li-embed-wrap { padding: 28px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; min-height: 520px; background: var(--ksc-mid); }
+.ksc-li-embed-wrap .LI-profile-badge { width: 100%; }
+.ksc-li-embed-wrap .profile-badge { background: #1a1a1a !important; border: 1px solid rgba(255,255,255,0.08) !important; color: var(--ksc-white) !important; width: 100% !important; }
 .ksc-li-note { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.2); line-height: 1.7; margin-top: auto; }
 .ksc-li-note a { color: var(--ksc-blue); }
 
