@@ -1,6 +1,6 @@
 # KSC STATIC BUILD — HANDOFF
-## Updated: April 16, 2026 (end of session — full audit + case study rewrites)
-## Status: ALL 19 CASE STUDY PAGES COMPLETE. Live at schmollcreative.com/punksite/. Hero FIXED (CSS Grid). CSS v2.0 audited. Case studies rewritten.
+## Updated: April 20, 2026 — Code review fixes applied
+## Status: ALL 19 CASE STUDY PAGES COMPLETE. Live at schmollcreative.com/punksite/. CSS v3.0. All code review issues resolved.
 
 ---
 
@@ -382,4 +382,4 @@ The Avada build taught us:
 | Apr 5 | Avada build: CSS rewrite, ticker positioning, SR7 guide update, CSS framework research |
 | Apr 12 | Static build started: migrated off Avada, built index.html + style.css + main.js, first 11 case studies |
 | Apr 13 | Ticker positioning, deploy script, all 19 case studies completed |
-| Apr 16 | Hero layout FIXED with CSS Grid (grid-template-rows). Removed duplicate `.ksc-hero-zombie` rule (the actual bug). Zombie `right: 3vw`. CSS v2.0 audit: dead Avada code removed, hero bg path fixed to relative, cursor scoped to hover devices. Case studies rewritten: Rox/Sweetgrass/TopShelf/ATRA/JacksonCounty=long form (Challenge/Why/Approach), GWL/Netflix/US78/GVC/OrthoLite=short form. MP4 videos replaced with YouTube embeds on MidnightMoon/GVC/OrthoLite. Star Taco loops to Green Ox. Full copyright footer on all 19 pages. |
+| Apr 20 | Code review: 8 fixes applied — duplicate OrthoLite removed, loading=lazy on 71 images, OG/social meta tags, removed maximum-scale=1.0, CSS bg paths → root-relative /punksite/, loader math fixed, contact.php → PHPMailer+SMTP, setup-password.sh removed from repo |
