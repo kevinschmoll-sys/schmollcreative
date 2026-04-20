@@ -1,9 +1,13 @@
 # KSC — schmollcreative.com
-# Hides index.html from URLs, enforces www redirect, caching rules
+# Hides index.html from URLs, enforces HTTPS + www redirect, caching rules
 
 # ── Enable rewrite engine ─────────────────────────────────────
 Options -Indexes
 RewriteEngine On
+
+# ── Force HTTPS ───────────────────────────────────────────────
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # ── Force www (canonical domain) ─────────────────────────────
 RewriteCond %{HTTP_HOST} !^www\. [NC]
