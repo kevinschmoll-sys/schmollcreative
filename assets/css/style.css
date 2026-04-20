@@ -386,6 +386,47 @@ img { display: block; max-width: 100%; -webkit-user-drag: none; user-select: non
   .ksc-pg-quiet { display: block; opacity: 1; }
 }
 
+/* ── SOCIAL ─────────────────────────────────────────────────── */
+.ksc-social { background: var(--ksc-mid); border-top: 3px solid var(--ksc-yellow); overflow: hidden; }
+.ksc-social-masthead { display: grid; grid-template-columns: 56px 1fr; border-bottom: 3px solid rgba(255,255,255,0.06); }
+.ksc-social-masthead-right { padding: clamp(24px,3vw,40px) var(--ksc-pad); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.ksc-social-h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px,5vw,72px); line-height: 0.88; color: var(--ksc-white); }
+.ksc-social-h2-yellow { color: var(--ksc-yellow); }
+.ksc-social-grid { display: grid; grid-template-columns: repeat(3,1fr); }
+.ksc-social-col { border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; }
+.ksc-social-col-header { display: flex; align-items: center; gap: 12px; padding: 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); }
+.ksc-social-col-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ksc-social-col-icon svg { width: 20px; height: 20px; }
+.ksc-social-col-name { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.06em; color: var(--ksc-white); }
+.ksc-social-col-handle { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: rgba(255,255,255,0.3); margin-top: 1px; }
+.ksc-social-col-link { margin-left: auto; font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: var(--ksc-blue); text-transform: uppercase; border: 1px solid rgba(6,141,193,0.3); padding: 5px 10px; transition: background 0.15s, color 0.15s, border-color 0.15s; white-space: nowrap; }
+.ksc-social-col-link:hover { background: var(--ksc-blue); color: var(--ksc-white); border-color: var(--ksc-blue); }
+.ksc-social-col-body { flex: 1; overflow: hidden; }
+
+/* Instagram grid */
+.ksc-ig-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; padding: 2px; }
+.ksc-ig-cell { aspect-ratio: 1; background: #1a1a1a; position: relative; overflow: hidden; display: block; }
+.ksc-ig-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s, filter 0.3s; filter: saturate(0.7) brightness(0.85); pointer-events: none; }
+.ksc-ig-cell:hover img { transform: scale(1.06); filter: saturate(1) brightness(1); }
+.ksc-ig-overlay { position: absolute; inset: 0; background: rgba(6,141,193,0); display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.ksc-ig-cell:hover .ksc-ig-overlay { background: rgba(6,141,193,0.65); }
+.ksc-ig-overlay svg { opacity: 0; transition: opacity 0.2s; width: 24px; height: 24px; }
+.ksc-ig-cell:hover .ksc-ig-overlay svg { opacity: 1; }
+.ksc-ig-note { padding: 12px 20px; background: rgba(6,141,193,0.06); border-top: 1px solid rgba(6,141,193,0.15); font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.2); line-height: 1.7; }
+.ksc-ig-note a { color: var(--ksc-blue); }
+
+/* X timeline */
+.ksc-x-embed-wrap { padding: 16px; height: 520px; overflow: hidden; background: var(--ksc-mid); }
+.ksc-x-embed-wrap iframe { border-radius: 0 !important; border: none !important; width: 100% !important; height: 100% !important; }
+
+/* LinkedIn badge */
+.ksc-li-embed-wrap { padding: 28px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; min-height: 520px; background: var(--ksc-mid); }
+.ksc-li-note { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.2); line-height: 1.7; margin-top: auto; }
+.ksc-li-note a { color: var(--ksc-blue); }
+
+@media (max-width: 900px) { .ksc-social-grid { grid-template-columns: 1fr; } .ksc-social-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); } }
+@media (max-width: 600px) { .ksc-social-masthead { grid-template-columns: 1fr; } .ksc-social-masthead .ksc-spine { display: none; } }
+
 /* ── KEYFRAMES ──────────────────────────────────────────────── */
 @keyframes kscBlink { 0%,100%{opacity:1} 50%{opacity:0.15} }
 @keyframes kscMarqFwd { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
