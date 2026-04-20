@@ -1,6 +1,6 @@
 # KSC STATIC BUILD — HANDOFF
-## Updated: April 20, 2026 — Full session complete
-## Status: LIVE at schmollcreative.com (root domain). All sections complete. SEO done. Social section live.
+## Updated: April 20, 2026 — Session complete. Site fully live.
+## Status: LIVE at https://www.schmollcreative.com — all sections complete, SEO done, HTTPS enforced, contact form working.
 
 ---
 
