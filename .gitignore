@@ -21,3 +21,4 @@ vendor/
 # Fallback mail handler (only needed if PHPMailer missing)
 contact-fallback.php
 PHPMailer/
+contact.php
