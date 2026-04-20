@@ -1,0 +1,134 @@
+/* ============================================================
+   KEVIN SCHMOLL CREATIVE — case-study.css
+   Styles for all work/ case study pages
+   ============================================================ */
+
+/* NAV */
+.ksc-cs-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--ksc-yellow);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 48px; gap: 24px;
+}
+.ksc-cs-back {
+  font-family: 'Share Tech Mono', monospace; font-size: 11px;
+  letter-spacing: 0.15em; color: rgba(0,0,0,0.5); text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px; transition: color 0.15s;
+}
+.ksc-cs-back:hover { color: var(--ksc-dark); }
+.ksc-cs-back svg { flex-shrink: 0; stroke: rgba(0,0,0,0.5); }
+.ksc-cs-nav-title {
+  font-family: 'Share Tech Mono', monospace; font-size: 10px;
+  letter-spacing: 0.2em; color: rgba(0,0,0,0.35); text-transform: uppercase;
+}
+.ksc-cs-nav-next {
+  font-family: 'Share Tech Mono', monospace; font-size: 11px;
+  letter-spacing: 0.15em; color: var(--ksc-blue); text-transform: uppercase;
+  transition: color 0.15s;
+}
+.ksc-cs-nav-next:hover { color: var(--ksc-dark); }
+@media (max-width: 768px) { .ksc-cs-nav { padding: 14px 24px; } .ksc-cs-nav-title { display: none; } }
+
+/* HERO — SPLIT (image right) */
+.ksc-cs-hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 92vh;
+  background: var(--ksc-dark);
+}
+.ksc-cs-hero-split-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 64px;
+  border-bottom: 3px solid var(--ksc-yellow);
+}
+.ksc-cs-hero-split-right {
+  position: relative; overflow: hidden;
+}
+.ksc-cs-hero-split-right::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(56, 142, 60, 0.55);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 1;
+}
+.ksc-cs-hero-split-right img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+  pointer-events: none;
+}
+@media (max-width: 900px) {
+  .ksc-cs-hero-split { grid-template-columns: 1fr; min-height: auto; }
+  .ksc-cs-hero-split-right { height: 60vw; min-height: 280px; }
+  .ksc-cs-hero-split-left { padding: 48px 24px; border-bottom: none; border-top: 3px solid var(--ksc-yellow); order: 2; }
+  .ksc-cs-hero-split-right { order: 1; }
+}
+
+/* HERO */
+.ksc-cs-hero {
+  padding: 80px 64px 60px;
+  background: var(--ksc-dark);
+  border-bottom: 3px solid var(--ksc-yellow);
+}
+.ksc-cs-hero-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 40px; }
+.ksc-cs-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 13vw, 200px);
+  line-height: 0.85; letter-spacing: -0.01em;
+  color: var(--ksc-white); margin-bottom: 24px;
+}
+.ksc-cs-title .ksc-yellow { color: var(--ksc-yellow); }
+.ksc-cs-subtitle {
+  font-family: 'Barlow', sans-serif; font-size: clamp(18px, 1.6vw, 24px);
+  font-weight: 300; color: rgba(255,255,255,0.5);
+  max-width: 560px; line-height: 1.6;
+}
+@media (max-width: 768px) { .ksc-cs-hero { padding: 48px 24px 40px; } }
+
+/* COVER IMAGE */
+.ksc-cs-cover { width: 100%; }
+.ksc-cs-cover img { width: 100%; height: clamp(300px, 55vh, 680px); object-fit: cover; display: block; }
+
+/* OVERVIEW */
+.ksc-cs-overview { padding: 72px 64px; background: var(--ksc-dark); }
+.ksc-cs-overview-grid { display: grid; grid-template-columns: 1fr 280px; gap: 80px; }
+.ksc-cs-label { font-family: 'Share Tech Mono', monospace; font-size: 30px; letter-spacing: 0.02em; color: var(--ksc-blue); text-transform: uppercase; margin-bottom: 20px; }
+.ksc-cs-body  { font-size: 15px; font-weight: 300; line-height: 1.85; color: rgba(255,255,255,0.65); }
+.ksc-cs-overview-meta { border-left: 1px solid rgba(255,255,255,0.08); padding-left: 40px; }
+.ksc-cs-meta-block { margin-bottom: 32px; }
+.ksc-cs-meta-label { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.22em; color: rgba(255,255,255,0.25); text-transform: uppercase; margin-bottom: 8px; }
+.ksc-cs-meta-value { font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.75); line-height: 1.7; }
+@media (max-width: 900px) { .ksc-cs-overview { padding: 48px 24px; } .ksc-cs-overview-grid { grid-template-columns: 1fr; gap: 40px; } .ksc-cs-overview-meta { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); padding-left: 0; padding-top: 32px; } }
+
+/* GALLERY */
+.ksc-cs-gallery { padding: 0; background: var(--ksc-dark); }
+.ksc-cs-gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; }
+.ksc-cs-img { overflow: hidden; background: #fff; }
+.ksc-cs-img.bg-green { background: #208342; }
+.ksc-cs-img.bg-grey { background: #e2e2e2; }
+.ksc-cs-img.bg-dark { background: #111; }
+.ksc-cs-img.bg-photo img { object-fit: cover; height: 500px; }
+.ksc-cs-img img { width: 100%; height: auto; object-fit: contain; display: block; transition: transform 0.5s ease; }
+.ksc-cs-img:hover img { transform: scale(1.02); }
+.ksc-cs-img-wide { grid-column: span 2; }
+.ksc-cs-gallery-3col { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 768px) { .ksc-cs-gallery-grid { grid-template-columns: 1fr; } .ksc-cs-img-wide, .ksc-cs-img { grid-column: span 1; } .ksc-cs-gallery-3col { grid-template-columns: 1fr; } }
+
+/* QUOTE */
+.ksc-cs-quote { background: var(--ksc-blue); padding: 64px; }
+.ksc-cs-blockquote { font-family: 'Barlow', sans-serif; font-size: clamp(18px, 2.5vw, 28px); font-weight: 300; font-style: italic; line-height: 1.6; color: var(--ksc-white); max-width: 800px; }
+.ksc-cs-quote-attr { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.55); margin-top: 24px; text-transform: uppercase; }
+@media (max-width: 768px) { .ksc-cs-quote { padding: 40px 24px; } }
+
+/* NEXT PROJECT */
+.ksc-cs-next { background: var(--ksc-mid); border-top: 3px solid var(--ksc-yellow); }
+.ksc-cs-next-link { display: block; padding: 56px 64px; transition: background 0.2s; }
+.ksc-cs-next-link:hover { background: rgba(255,246,0,0.04); }
+.ksc-cs-next-label { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 0.28em; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 16px; }
+.ksc-cs-next-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 6vw, 80px); line-height: 0.88; color: var(--ksc-white); margin-bottom: 12px; transition: color 0.2s; }
+.ksc-cs-next-link:hover .ksc-cs-next-title { color: var(--ksc-yellow); }
+.ksc-cs-next-sub { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
+@media (max-width: 768px) { .ksc-cs-next-link { padding: 40px 24px; } }

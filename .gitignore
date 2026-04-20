@@ -1,0 +1,10 @@
+# Theme distribution zips
+*.zip
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
