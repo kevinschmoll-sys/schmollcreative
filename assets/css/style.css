@@ -431,14 +431,21 @@ img { display: block; max-width: 100%; -webkit-user-drag: none; user-select: non
 .ksc-avail-cta { display: block; text-align: center; padding: 14px 24px; background: var(--ksc-yellow); color: var(--ksc-dark); font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.08em; transition: background 0.15s; }
 .ksc-avail-cta:hover { background: var(--ksc-white); color: var(--ksc-dark); }
 
-/* LinkedIn badge */
-.ksc-li-embed-wrap { padding: 28px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; min-height: 520px; background: var(--ksc-mid); }
-.ksc-li-embed-wrap .LI-profile-badge { width: 100%; }
-.ksc-li-embed-wrap .profile-badge { background: #1a1a1a !important; border: 1px solid rgba(255,255,255,0.08) !important; color: var(--ksc-white) !important; width: 100% !important; }
-.ksc-li-note { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.2); line-height: 1.7; margin-top: auto; }
+/* LinkedIn static badge */
+.ksc-li-embed-wrap { padding: 28px; display: flex; flex-direction: column; gap: 20px; min-height: 300px; background: var(--ksc-mid); }
+.ksc-li-static-badge { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08); padding: 24px; display: flex; flex-direction: column; gap: 20px; flex: 1; }
+.ksc-li-badge-top { display: flex; align-items: center; gap: 16px; }
+.ksc-li-badge-photo { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); flex-shrink: 0; pointer-events: none; }
+.ksc-li-badge-name { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--ksc-white); line-height: 1; }
+.ksc-li-badge-title { font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.5); margin-top: 4px; }
+.ksc-li-badge-company { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--ksc-blue); margin-top: 4px; text-transform: uppercase; }
+.ksc-li-badge-bio { font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.7; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 16px; }
+.ksc-li-badge-btn { display: flex; align-items: center; gap: 10px; padding: 12px 20px; background: var(--ksc-blue); color: var(--ksc-white); font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.06em; transition: background 0.15s; align-self: flex-start; margin-top: auto; }
+.ksc-li-badge-btn:hover { background: var(--ksc-white); color: var(--ksc-dark); }
+.ksc-li-note { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: rgba(255,255,255,0.2); line-height: 1.7; }
 .ksc-li-note a { color: var(--ksc-blue); }
 
-@media (max-width: 900px) { .ksc-social-grid { grid-template-columns: 1fr; } .ksc-social-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); } }
+@media (max-width: 900px) { .ksc-social-grid { grid-template-columns: 1fr; } .ksc-social-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); } .ksc-li-embed-wrap { min-height: 300px; } .ksc-li-embed-wrap .LI-profile-badge, .ksc-li-embed-wrap iframe { width: 100% !important; min-height: 260px; } }
 @media (max-width: 600px) { .ksc-social-masthead { grid-template-columns: 1fr; } .ksc-social-masthead .ksc-spine { display: none; } }
 
 /* ── KEYFRAMES ──────────────────────────────────────────────── */
