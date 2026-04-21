@@ -131,6 +131,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.ksc-reveal').forEach(function (el) { el.classList.add('visible'); });
   }
 
+  /* FORM TIME STAMP — spam protection */
+  var ftEl = document.getElementById('ksc-form-time');
+  if (ftEl) ftEl.value = Math.floor(Date.now() / 1000);
+
   /* COPYRIGHT YEAR */
   var yr = document.getElementById('ksc-year');
   if (yr) yr.textContent = new Date().getFullYear();

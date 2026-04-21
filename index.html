@@ -463,6 +463,8 @@
   <form onsubmit="kscSubmitForm(event)">
     <!-- Honeypot — hidden from humans, bots fill it in -->
     <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off">
+    <!-- Time check — populated by JS on page load -->
+    <input type="hidden" name="form_time" id="ksc-form-time">
     <div class="ksc-form-grid">
       <div class="ksc-form-field"><label class="ksc-form-label" for="ksc-cf-name">Name</label><input class="ksc-form-input" type="text" id="ksc-cf-name" placeholder="Your name" required></div>
       <div class="ksc-form-field"><label class="ksc-form-label" for="ksc-cf-email">Email</label><input class="ksc-form-input" type="email" id="ksc-cf-email" placeholder="your@email.com" required></div>
